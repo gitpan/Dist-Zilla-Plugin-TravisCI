@@ -20,17 +20,16 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "Dist::Zilla::Plugin::TravisCI",
   "PREREQ_PM" => {
-    "Dist::Zilla" => 0,
-    "File::Slurp" => 0,
-    "Path::Class" => 0,
-    "YAML" => 0,
-    "namespace::autoclean" => 0
+    "Dist::Zilla" => "4.300034",
+    "File::Slurp" => "9999.19",
+    "Path::Class" => "0.32",
+    "YAML" => "0.84"
   },
   "TEST_REQUIRES" => {
     "Test::LoadAllModules" => "0.021",
     "Test::More" => "0.96"
   },
-  "VERSION" => "0.001",
+  "VERSION" => "0.002",
   "test" => {
     "TESTS" => "t/*.t"
   }

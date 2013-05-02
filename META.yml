@@ -8,25 +8,24 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300034, CPAN::Meta::Converter version 2.130880'
+generated_by: 'Dist::Zilla version 4.300034, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: Dist-Zilla-Plugin-TravisCI
 requires:
-  Dist::Zilla: 0
-  File::Slurp: 0
-  Path::Class: 0
-  YAML: 0
-  namespace::autoclean: 0
+  Dist::Zilla: 4.300034
+  File::Slurp: 9999.19
+  Path::Class: 0.32
+  YAML: 0.84
 resources:
   homepage: https://github.com/Getty/p5-dist-zilla-plugin-travisci
   repository: https://github.com/Getty/p5-dist-zilla-plugin-travisci.git
-version: 0.001
+version: 0.002
 x_Dist_Zilla:
   perl:
-    version: 5.016003
+    version: 5.014002
   plugins:
     -
       class: Dist::Zilla::Plugin::GatherDir
@@ -113,9 +112,9 @@ x_Dist_Zilla:
       name: '@Author::GETTY/GithubMeta'
       version: 0.28
     -
-      class: Dist::Zilla::Plugin::TravisCI
-      name: '@Author::GETTY/TravisCI'
-      version: ~
+      class: Dist::Zilla::Plugin::TravisYML
+      name: '@Author::GETTY/TravisYML'
+      version: 0.97
     -
       class: Dist::Zilla::Plugin::InstallRelease
       name: '@Author::GETTY/InstallRelease'

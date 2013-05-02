@@ -3,8 +3,21 @@ Changes from 1739-07-19 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.001 at 2013-05-02 11:54:31 +0000
+version 0.002 at 2013-05-02 21:18:22 +0000
 ------------------------------------------
+
+  Change: be15a3888b7ff339df4119e9f1a21e1a93c45dc4
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2013-05-02 23:17:58 +0000
+
+    More details, more documentation (with default config), so also
+    updated .travis.yml 
+
+  Change: d9185874b577e61859ddbaf1661a14d28d8d1ce4
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2013-05-02 08:00:42 +0000
+
+    Tighten requirements, removed namespace::autoclean 
 
   Change: 91a450b82c9839956d61afb4b264d148cfb8a502
   Author: Torsten Raudssus <torsten@raudss.us>
