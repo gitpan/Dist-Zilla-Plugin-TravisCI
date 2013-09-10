@@ -1,10 +1,85 @@
 ==================================================
-Changes from 1739-07-19 00:00:00 +0000 to present.
+Changes from 1739-11-27 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.002 at 2013-05-02 21:18:22 +0000
+version 0.003 at 2013-09-10 22:21:29 +0000
 ------------------------------------------
+
+  Change: 8f0cc1753b48f536f2ceecba48522f7e84beec5a
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2013-09-11 00:21:20 +0000
+
+    Own new .travis.yml 
+
+  Change: 095f0fe28389c70cc0006b415d3316ea58bd8749
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2013-09-11 00:20:36 +0000
+
+    Merge branch 'master' of
+    github.com:Getty/p5-dist-zilla-plugin-travisci 
+
+  Change: aec19cffaa9eb1f66cebd122812e20e52b7ce5a5
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2013-09-10 15:20:31 +0000
+
+    Merge pull request #2 from dolmen/lazy-loading
+
+    Lazy loading 
+
+  Change: 8b289f14051304dc9e50963f05540e2ae1b4488b
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2013-09-11 00:18:18 +0000
+
+    Added Perl 5.18 to default setup 
+
+  Change: 6f23ba994ca1ae5d6ea48c635bab204d9c2866df
+  Author: Olivier Mengué <dolmen@cpan.org>
+  Date : 2013-07-18 15:11:19 +0000
+
+    Output the file in the root of the distribution source
+
+    The code was already doing that (because $zilla->built_in is empty
+    when the plugin runs), but just by accident! 
+
+  Change: aa3deb85c7259f5bfe21ccb127ad1a2d4edaf7d1
+  Author: Olivier Mengué <dolmen@cpan.org>
+  Date : 2013-07-18 14:53:53 +0000
+
+    Lazy load dependencies 
+
+  Change: 78247dcb6aeea77ae5ff9aa84fd3abe96768f7a0
+  Author: Olivier Mengué <dolmen@cpan.org>
+  Date : 2013-07-18 14:49:41 +0000
+
+    Build our dist with our version of the plugin
+
+    ... thanks to [Bootstrap::lib] 
+
+  Change: f846ad160483b7466cdd842a13626f508e9ab7f9
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2013-06-17 16:37:16 +0000
+
+    New travisyml with the new grep 
+
+  Change: a4df7085573f437f4f40719a1e95a34a5ae7c5a2
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2013-06-17 16:36:29 +0000
+
+    If travis ever changes the platform, this grep replacement will work
+    on a wider range of systems 
+
+  Change: 9d7e549c0b24e4a0f00626f08f245ca4e651a1a8
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2013-05-03 03:36:41 +0000
+
+    coveralls implementation (so far, not working yet) 
+
+  Change: 00ae81d275c87840fd4fa01c835f586c1b214d54
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2013-05-02 23:21:07 +0000
+
+    Fixed POD a bit 
 
   Change: be15a3888b7ff339df4119e9f1a21e1a93c45dc4
   Author: Torsten Raudssus <torsten@raudss.us>

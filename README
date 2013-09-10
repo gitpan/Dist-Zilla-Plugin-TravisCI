@@ -1,11 +1,11 @@
 
 
 This archive contains the distribution Dist-Zilla-Plugin-TravisCI,
-version 0.002:
+version 0.003:
 
   Integrating the generation of .travis.yml into your dzil
 
-This software is copyright (c) 2013 by Raudssus Social Software.
+This software is copyright (c) 2013 by L<Raudssus Social Software|https://raudss.us/>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

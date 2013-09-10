@@ -3,7 +3,7 @@ BEGIN {
   $Dist::Zilla::Plugin::TravisCI::AUTHORITY = 'cpan:GETTY';
 }
 {
-  $Dist::Zilla::Plugin::TravisCI::VERSION = '0.002';
+  $Dist::Zilla::Plugin::TravisCI::VERSION = '0.003';
 }
 # ABSTRACT: Integrating the generation of .travis.yml into your dzil
 
@@ -13,16 +13,13 @@ use Dist::Zilla::File::InMemory;
 
 with 'Dist::Zilla::Role::InstallTool';
 
-use File::Slurp;
-use YAML qw( DumpFile );
-use Path::Class;
 
 our @phases = ( ( map { my $phase = $_; ('before_'.$phase, $phase, 'after_'.$phase) } qw( install script ) ), 'after_success', 'after_failure' );
 our @emptymvarrayattr = qw( notify_email notify_irc requires env script_env extra_dep );
 
 has $_ => ( is => 'ro', isa => 'ArrayRef[Str]', default => sub { [] } ) for (@phases, @emptymvarrayattr);
 
-our @bools = qw( verbose test_deps test_authordeps no_notify_email );
+our @bools = qw( verbose test_deps test_authordeps no_notify_email coveralls );
 
 has $_ => ( is => 'ro', isa => 'Bool', default => sub { 0 } ) for @bools;
 
@@ -31,13 +28,14 @@ has irc_template  => ( is => 'ro', isa => 'ArrayRef[Str]', default => sub { [
 ] } );
 
 has perl_version  => ( is => 'ro', isa => 'ArrayRef[Str]', default => sub { [
+   "5.18",
    "5.16",
    "5.14",
    "5.12",
    "5.10",
 ] } );
 
-our @core_env = ("AUTOMATED_TESTING=1 HARNESS_OPTIONS=j10:c HARNESS_TIMER=1");
+our @core_env = ("HARNESS_OPTIONS=j10:c HARNESS_TIMER=1");
 
 around mvp_multivalue_args => sub {
 	my ($orig, $self) = @_;
@@ -56,6 +54,8 @@ sub _get_exports { shift; map { "export ".$_ } @_ }
 sub build_travis_yml {
 	my ($self, $is_build_branch) = @_;
 
+	require YAML;
+
 	my $zilla = $self->zilla;
 	my %travisyml = ( language => "perl", perl => $self->perl_version );
 	my $rmeta = $zilla->distmeta->{resources};
@@ -73,8 +73,6 @@ sub build_travis_yml {
 		$travisyml{notifications} = \%notifications;
 	}
 
-	my @env_exports = $self->_get_exports(@core_env, @{$self->env});
-
 	my %phases_commands = map { $_ => $self->$_ } @phases;
 
 	my $verbose = $self->verbose ? ' --verbose ' : ' --quiet ';
@@ -84,15 +82,31 @@ sub build_travis_yml {
 		'git config --global user.email $HOSTNAME":not-for-mail@travis-ci.org"',
 	);
 
+	my @extra_deps = @{$self->extra_dep};
+
+	my $needs_cover;
+
+	if ($self->coveralls) {
+		push @extra_deps, 'Devel::Cover::Report::Coveralls';
+		unshift @{$phases_commands{after_success}}, 'cover -report coveralls';
+		$needs_cover = 1;
+	}
+
+	if ($needs_cover) {
+		push @{$self->env}, 'HARNESS_PERL_SWITCHES=-MDevel::Cover=-db,$TRAVIS_BUILD_DIR/cover_db';
+	}
+
+	my @env_exports = $self->_get_exports(@core_env, @{$self->env});
+
 	unless (@{$phases_commands{install}}) {
 		push @{$phases_commands{install}}, (
 			"cpanm ".$verbose." --notest --skip-satisfied Dist::Zilla",
-			"dzil authordeps | grep -vP '[^\\w:]' | xargs -n 5 -P 10 cpanm ".$verbose." ".($self->test_authordeps ? "" : " --notest ")." --skip-satisfied",
-			"dzil listdeps | grep -vP '[^\\w:]' | cpanm ".$verbose." ".($self->test_deps ? "" : " --notest ")." --skip-satisfied",
+			"dzil authordeps | grep -ve '^\\W' | xargs -n 5 -P 10 cpanm ".$verbose." ".($self->test_authordeps ? "" : " --notest ")." --skip-satisfied",
+			"dzil listdeps | grep -ve '^\\W' | cpanm ".$verbose." ".($self->test_deps ? "" : " --notest ")." --skip-satisfied",
 		);
-		if (@{$self->extra_dep}) {
+		if (@extra_deps) {
 			push @{$phases_commands{install}}, (
-				"cpanm ".$verbose." ".($self->test_deps ? "" : " --notest ")." ".join(" ",@{$self->extra_dep}),
+				"cpanm ".$verbose." ".($self->test_deps ? "" : " --notest ")." ".join(" ",@extra_deps),
 			);
 		}
 	}
@@ -136,7 +150,7 @@ sub build_travis_yml {
 		}
 	}
 
-	DumpFile(Path::Class::File->new($zilla->built_in, '.travis.yml')->stringify, \%travisyml);
+	YAML::DumpFile($zilla->root->file('.travis.yml')->stringify, \%travisyml);
 
 }
 
@@ -145,9 +159,8 @@ __PACKAGE__->meta->make_immutable;
 
 1;
 
-
-
 __END__
+
 =pod
 
 =head1 NAME
@@ -156,7 +169,7 @@ Dist::Zilla::Plugin::TravisCI - Integrating the generation of .travis.yml into y
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 SYNOPSIS
 
@@ -183,6 +196,7 @@ version 0.002
   test_deps = 0
   test_authordeps = 0
   no_notify_email = 0
+  coveralls = 0
 
 =head1 DESCRIPTION
 
@@ -192,7 +206,7 @@ documentation :).
 
 =head1 BASED ON
 
-  Based on code from L<Dist::Zilla::TravisCI>.
+This plugin is based on code of L<Dist::Zilla::TravisCI>.
 
 =head1 SUPPORT
 
@@ -211,14 +225,13 @@ Issue Tracker
 
 =head1 AUTHOR
 
-Torsten Raudssus <getty@cpan.org>
+Torsten Raudssus <torsten@raudss.us> L<https://raudss.us/>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Raudssus Social Software.
+This software is copyright (c) 2013 by L<Raudssus Social Software|https://raudss.us/>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
