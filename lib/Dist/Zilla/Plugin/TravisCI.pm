@@ -3,7 +3,7 @@ BEGIN {
   $Dist::Zilla::Plugin::TravisCI::AUTHORITY = 'cpan:GETTY';
 }
 {
-  $Dist::Zilla::Plugin::TravisCI::VERSION = '0.003';
+  $Dist::Zilla::Plugin::TravisCI::VERSION = '0.004';
 }
 # ABSTRACT: Integrating the generation of .travis.yml into your dzil
 
@@ -100,9 +100,9 @@ sub build_travis_yml {
 
 	unless (@{$phases_commands{install}}) {
 		push @{$phases_commands{install}}, (
-			"cpanm ".$verbose." --notest --skip-satisfied Dist::Zilla",
-			"dzil authordeps | grep -ve '^\\W' | xargs -n 5 -P 10 cpanm ".$verbose." ".($self->test_authordeps ? "" : " --notest ")." --skip-satisfied",
-			"dzil listdeps | grep -ve '^\\W' | cpanm ".$verbose." ".($self->test_deps ? "" : " --notest ")." --skip-satisfied",
+			"cpanm ".$verbose." --notest --skip-installed Dist::Zilla",
+			"dzil authordeps | grep -ve '^\\W' | xargs -n 5 -P 10 cpanm ".$verbose." ".($self->test_authordeps ? "" : " --notest ")." --skip-installed",
+			"dzil listdeps | grep -ve '^\\W' | cpanm ".$verbose." ".($self->test_deps ? "" : " --notest ")." --skip-installed",
 		);
 		if (@extra_deps) {
 			push @{$phases_commands{install}}, (
@@ -119,7 +119,7 @@ sub build_travis_yml {
 
 	unless (@{$phases_commands{install}}) {
 		$phases_commands{install} = [
-			'cpanm --installdeps '.$verbose.' '.($self->test_deps ? "" : "--notest").' --skip-satisfied .',
+			'cpanm --installdeps '.$verbose.' '.($self->test_deps ? "" : "--notest").' --skip-installed .',
 		];
 	}
 
@@ -169,7 +169,7 @@ Dist::Zilla::Plugin::TravisCI - Integrating the generation of .travis.yml into y
 
 =head1 VERSION
 
-version 0.003
+version 0.004
 
 =head1 SYNOPSIS
 
