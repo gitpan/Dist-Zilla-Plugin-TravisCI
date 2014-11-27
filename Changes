@@ -1,10 +1,39 @@
 ==================================================
-Changes from 1740-05-04 00:00:00 +0000 to present.
+Changes from 1741-02-12 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.004 at 2014-02-16 01:30:53 +0000
+version 0.005 at 2014-11-27 04:24:02 +0000
 ------------------------------------------
+
+  Change: c2b6cab5b115aec105dee6517fbf7b61e74423e3
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2014-11-27 05:23:46 +0000
+
+    Revert revert, error was in bundle 
+
+  Change: 2a592200f204cbf5f3868909fb0a90ac99a6653c
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2014-11-27 05:06:56 +0000
+
+    Added perl 5.20 to the perls, changed requires attribute name for
+    now... (WIP) 
+
+  Change: 281e7b74fbac4fa9fc009c4de2a27da012d2100c
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2014-11-27 04:20:21 +0000
+
+    Revert "Using App::CPAN::Fresh for installing authordeps, directly
+    testing this..."
+
+    This reverts commit 987a8e419dfee79a8214b6c25bf9ca24e876caa9. 
+
+  Change: 987a8e419dfee79a8214b6c25bf9ca24e876caa9
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2014-11-25 17:36:20 +0000
+
+    Using App::CPAN::Fresh for installing authordeps, directly testing
+    this... 
 
   Change: f81da909afa1e8b93200a32655a37b0fbe15e2b6
   Author: Torsten Raudssus <torsten@raudss.us>

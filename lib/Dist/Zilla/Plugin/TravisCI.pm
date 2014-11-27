@@ -2,17 +2,13 @@ package Dist::Zilla::Plugin::TravisCI;
 BEGIN {
   $Dist::Zilla::Plugin::TravisCI::AUTHORITY = 'cpan:GETTY';
 }
-{
-  $Dist::Zilla::Plugin::TravisCI::VERSION = '0.004';
-}
 # ABSTRACT: Integrating the generation of .travis.yml into your dzil
-
+$Dist::Zilla::Plugin::TravisCI::VERSION = '0.005';
 use Moose;
 
 use Dist::Zilla::File::InMemory;
 
 with 'Dist::Zilla::Role::InstallTool';
-
 
 our @phases = ( ( map { my $phase = $_; ('before_'.$phase, $phase, 'after_'.$phase) } qw( install script ) ), 'after_success', 'after_failure' );
 our @emptymvarrayattr = qw( notify_email notify_irc requires env script_env extra_dep );
@@ -28,6 +24,7 @@ has irc_template  => ( is => 'ro', isa => 'ArrayRef[Str]', default => sub { [
 ] } );
 
 has perl_version  => ( is => 'ro', isa => 'ArrayRef[Str]', default => sub { [
+   "5.20",
    "5.18",
    "5.16",
    "5.14",
@@ -169,7 +166,7 @@ Dist::Zilla::Plugin::TravisCI - Integrating the generation of .travis.yml into y
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 SYNOPSIS
 
