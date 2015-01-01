@@ -3,7 +3,7 @@ BEGIN {
   $Dist::Zilla::Plugin::TravisCI::AUTHORITY = 'cpan:GETTY';
 }
 # ABSTRACT: Integrating the generation of .travis.yml into your dzil
-$Dist::Zilla::Plugin::TravisCI::VERSION = '0.005';
+$Dist::Zilla::Plugin::TravisCI::VERSION = '0.006';
 use Moose;
 
 use Dist::Zilla::File::InMemory;
@@ -147,10 +147,16 @@ sub build_travis_yml {
 		}
 	}
 
+  %travisyml = $self->modify_travis_yml(%travisyml);
+
 	YAML::DumpFile($zilla->root->file('.travis.yml')->stringify, \%travisyml);
 
 }
 
+sub modify_travis_yml {
+  my ( $self, %args ) = @_;
+  return %args;
+}
 
 __PACKAGE__->meta->make_immutable;
 
@@ -166,7 +172,7 @@ Dist::Zilla::Plugin::TravisCI - Integrating the generation of .travis.yml into y
 
 =head1 VERSION
 
-version 0.005
+version 0.006
 
 =head1 SYNOPSIS
 

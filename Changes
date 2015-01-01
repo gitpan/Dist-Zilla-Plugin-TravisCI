@@ -1,10 +1,16 @@
 ==================================================
-Changes from 1741-02-12 00:00:00 +0000 to present.
+Changes from 1741-03-19 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.005 at 2014-11-27 04:24:02 +0000
+version 0.006 at 2015-01-01 19:38:41 +0000
 ------------------------------------------
+
+  Change: 70c21b7778fd07732197b819d3a6513bf7bf3c56
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2015-01-01 20:36:37 +0000
+
+    Added modify_travis_yml 
 
   Change: c2b6cab5b115aec105dee6517fbf7b61e74423e3
   Author: Torsten Raudssus <torsten@raudss.us>
