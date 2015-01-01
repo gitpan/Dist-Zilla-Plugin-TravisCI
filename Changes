@@ -3,8 +3,34 @@ Changes from 1741-03-19 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.006 at 2015-01-01 19:38:41 +0000
+version 0.007 at 2015-01-01 20:46:04 +0000
 ------------------------------------------
+
+  Change: 47a9ec82d58338f5c1bf2975db325dc3f0368482
+  Author: Torsten Raudssus <github@raudssus.de>
+  Date : 2015-01-01 21:45:31 +0000
+
+    Merge pull request #4 from kentfredric/master
+
+    Move "write to root" to AfterBuild phase. 
+
+  Change: 115607c307ed5198f72cd61ec106ce1e6633ec1f
+  Author: Kent Fredric <kentfredric@gmail.com>
+  Date : 2015-01-02 09:25:47 +0000
+
+    Move "write to root" to AfterBuild phase.
+
+    Also:
+
+    - new 'write_to' attribute.
+
+    - valid optios 'root' and 'build'
+
+    - 'build' writes to the shipped dist.
+
+    - both can be used in conjunction, but extra care may be needed.
+
+    - sensitivity to the future Path::Class apocalypse averted. 
 
   Change: 70c21b7778fd07732197b819d3a6513bf7bf3c56
   Author: Torsten Raudssus <torsten@raudss.us>
